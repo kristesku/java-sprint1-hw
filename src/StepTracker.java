@@ -1,5 +1,8 @@
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class StepTracker {
     private final GregorianCalendar calendar;
@@ -77,12 +80,12 @@ public class StepTracker {
             maxSteps = maxStepsOptional.isPresent() ? maxStepsOptional.getAsInt() : 0;
 
             bestStreakSize = 0;
-            int currentStreakSize = 0;
+            AtomicInteger currentStreakSize = new AtomicInteger();
             for (int monthDatum : monthData) {
                 if (monthDatum > targetSteps) {
-                    currentStreakSize = currentStreakSize + 1;
+                    currentStreakSize.getAndIncrement();
                 } else {
-                    bestStreakSize = Math.max(currentStreakSize, bestStreakSize);
+                    bestStreakSize = Math.max(currentStreakSize.get(), bestStreakSize);
                 }
             }
         }
@@ -92,14 +95,11 @@ public class StepTracker {
         }
 
         public String getDailyStepsString(int[] monthData) {
-            List<String> dailyStepsList = new ArrayList<>();
-            for (int i = 0; i < monthData.length; i++) {
-                if (monthData[i] == 0) {
-                    continue;
-                }
-                String dailyStepsString = (i + 1) + " день: " + monthData[i];
-                dailyStepsList.add(dailyStepsString);
-            }
+            List<String> dailyStepsList = IntStream
+                    .range(0, monthData.length)
+                    .filter(i -> monthData[i] != 0)
+                    .mapToObj(i -> (i + 1) + " день: " + monthData[i])
+                    .collect(Collectors.toList());
             return String.join(", ", dailyStepsList);
         }
     }

@@ -4,15 +4,13 @@ public class Main {
     public static void main(String[] args) {
         int minCommand = 0;
         int maxCommand = 3;
-        int command;
-
         StepTracker stepTracker = new StepTracker();
 
         System.out.println("\n# StepTracker v0.1\n");
         while (true) {
             printMenu();
             String message = "Введите номер команды (" + minCommand + "-" + maxCommand + "): ";
-            command = inputInt(message, minCommand, maxCommand);
+            int command = inputInt(message, minCommand, maxCommand);
             if (command == 0) {
                 System.out.println("\nЗавершение программы. Всего доброго!");
                 return;
@@ -36,12 +34,11 @@ public class Main {
     }
 
     private static int inputInt(String message, int minValue, int maxValue) {
-        int inputValue;
         while (true) {
             System.out.print(message);
             Scanner scanner = new Scanner(System.in);
             try {
-                inputValue = scanner.nextInt();
+                int inputValue = scanner.nextInt();
                 if ((inputValue >= minValue) & (inputValue <= maxValue)) {
                     return inputValue;
                 } else {
