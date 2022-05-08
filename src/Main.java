@@ -2,8 +2,11 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        int minCommand = 0;
+        int maxCommand = 3;
+        int command;
+
         StepTracker stepTracker = new StepTracker();
-        int command, minCommand = 0, maxCommand = 3;
 
         System.out.println("\n# StepTracker v0.1\n");
         while (true) {
@@ -56,11 +59,13 @@ public class Main {
         int yearIndex = getYearIndex();
         int monthIndex = getMonthIndex();
 
-        int minDay = 1, daysInMonth = stepTracker.getNumberOfDaysInMonth(yearIndex, monthIndex);
+        int minDay = 1;
+        int daysInMonth = stepTracker.getNumberOfDaysInMonth(yearIndex, monthIndex);
         String message = "Введите день (" + minDay + "-" + daysInMonth + "): ";
         int dayIndex = inputInt(message, minDay, daysInMonth) - 1;
 
-        int minSteps = 1, maxSteps = Integer.MAX_VALUE;
+        int minSteps = 1;
+        int maxSteps = Integer.MAX_VALUE;
         int stepsWalked = inputInt("Введите количество пройденных шагов: ", minSteps, maxSteps);
 
         stepTracker.addWalkedStepsData(yearIndex, monthIndex, dayIndex, daysInMonth, stepsWalked);
@@ -70,13 +75,15 @@ public class Main {
     }
 
     private static int getMonthIndex() {
-        int minMonth = 1, maxMonth = 12;
+        int minMonth = 1;
+        int maxMonth = 12;
         String message = "Введите месяц (" + minMonth + "-" + maxMonth + "): ";
         return inputInt(message, minMonth, maxMonth) - 1;
     }
 
     private static int getYearIndex() {
-        int minYear = 0, maxYear = 3000;
+        int minYear = 0;
+        int maxYear = 3000;
         String message = "Введите год (" + minYear + "-" + maxYear + "): ";
         return inputInt(message, minYear, maxYear) - 1;
     }
@@ -92,7 +99,8 @@ public class Main {
     }
 
     private static void setTargetSteps(StepTracker stepTracker) {
-        int minTarget = 1, maxTarget = Integer.MAX_VALUE;
+        int minTarget = 1;
+        int maxTarget = Integer.MAX_VALUE;
 
         System.out.println("\n## Получение статистики за месяц по пройденным шагам.");
         String message = "Введите новое целевое количество шагов в день (" + minTarget + "-" + maxTarget + "): ";

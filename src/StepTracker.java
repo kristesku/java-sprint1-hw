@@ -7,9 +7,11 @@ public class StepTracker {
     private int targetSteps;
 
     public StepTracker() {
-        walkedStepsData = new int[3000][12][0];
-        targetSteps = 10000;
-        calendar = new GregorianCalendar();
+        int maxYear = 3000;
+        int maxMonth = 12;
+        this.walkedStepsData = new int[maxYear][maxMonth][0];
+        this.targetSteps = 10000;
+        this.calendar = new GregorianCalendar();
     }
 
     public String getStepStatistics(int yearIndex, int monthIndex) {
@@ -56,16 +58,17 @@ public class StepTracker {
     }
 
     private static class MonthStepStatistics {
-        int totalSteps, maxSteps, totalKilocalories;
-        double averageStepsCount, walkedDistance;
+        int totalSteps;
+        int maxSteps;
+        int totalKilocalories;
         int bestStreakSize;
+        double averageStepsCount;
+        double walkedDistance;
 
         public MonthStepStatistics(int[] monthData, int targetSteps) {
-            Converter converter = new Converter();
-
             totalSteps = Arrays.stream(monthData).sum();
-            walkedDistance = converter.stepsToKilometers(totalSteps);
-            totalKilocalories = converter.stepsToKilocalories(totalSteps);
+            walkedDistance = Converter.stepsToKilometers(totalSteps);
+            totalKilocalories = Converter.stepsToKilocalories(totalSteps);
 
             OptionalDouble averageStepsOptional = Arrays.stream(monthData).average();
             averageStepsCount = averageStepsOptional.isPresent() ? averageStepsOptional.getAsDouble() : 0.0;
