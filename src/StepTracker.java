@@ -12,8 +12,8 @@ public class StepTracker {
         calendar = new GregorianCalendar();
     }
 
-    public String getStepStatistics(int yearNumber, int monthNumber) {
-        int[] monthData = walkedStepsData[yearNumber][monthNumber];
+    public String getStepStatistics(int yearIndex, int monthIndex) {
+        int[] monthData = walkedStepsData[yearIndex][monthIndex];
         MonthStepStatistics statistics = new MonthStepStatistics(monthData, targetSteps);
         String statisticsString;
 
